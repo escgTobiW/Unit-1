@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Android.Gradle.Manifest;
+using Unity.VisualScripting;
 using UnityEngine;
 public class Player : MonoBehaviour
 {
@@ -10,6 +12,12 @@ public class Player : MonoBehaviour
     Animator anim;
     public float speed = 5f;
     public bool coolDown = false;
+
+    //---TW-----
+    public Sprite spriteDead;
+    public bool dead = false;
+    //----------
+
     // Start is called before the first frame update
     void Start()
     {
@@ -78,6 +86,18 @@ public class Player : MonoBehaviour
             anim.SetBool("moving", true);
             spi.flipX = false;
         }
+
+        //----TW-----
+        if (dead == true)
+        {
+            spi.sprite = spriteDead;
+        }
+
+        //---------------
+
+
+
+
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -86,5 +106,16 @@ public class Player : MonoBehaviour
         {
             isGrounded = true;
         }
+
+        //---------TW----
+        if (other.gameObject.CompareTag("enemy"))
+        {
+            anim.SetBool("Dead", true);
+            dead = true;
+        }
+
+        //---------------
+
     }
+
 }
